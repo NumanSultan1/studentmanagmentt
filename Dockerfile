@@ -56,5 +56,5 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/database
 
-# Run migrations at startup and then start Apache
-CMD php artisan migrate --force && apache2-foreground
+# Run migrations and seed the database at startup, then start Apache
+CMD php artisan migrate --force --seed && apache2-foreground

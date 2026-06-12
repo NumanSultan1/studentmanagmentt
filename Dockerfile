@@ -39,6 +39,11 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 # Install PHP dependencies
 RUN composer install --optimize-autoloader --no-dev
 
+# Automatically set up .env file and SQLite for Render
+RUN cp .env.example .env \
+    && sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=sqlite/' .env \
+    && php artisan key:generate --force
+
 # Install Node dependencies and build assets
 RUN npm install && npm run build
 
